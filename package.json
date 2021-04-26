@@ -1,0 +1,26 @@
+{
+  "name": "nodejs-jdr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/B3-NodeJS/JDR-Tool.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/B3-NodeJS/JDR-Tool/issues"
+  },
+  "homepage": "https://github.com/B3-NodeJS/JDR-Tool#readme",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "fastify": "^3.15.0",
+    "mongoose": "^5.12.5"
+  }
+}
