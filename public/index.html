@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Projet JDR</title>
 </head>
 
 <body>
     <div class="container">
         <div class="home-container">
             <h1>JRD : L'outil indispensable à tous les Jeux Rôle De!</h1>
-            <form aciton="" onsubmit="action();">
+            <form onsubmit="fcAction(this)">
                 <label for="username">Entrez votre nom de joueur (il ne s'agit pas du nom de votre personnage) :</label>
                 <input type="text" name="username" id="username" placeholder="Nom de joueur" required
                     class="input-field" />
@@ -25,14 +25,19 @@
             </form>
         </div>
     </div>
-
-
+    
+    
     <script type="text/javascript">
-        function action() {
-            if (document.getElementById('role').value == "player")
-                window.location.href = "player.html";
-            else if (document.getElementById('role').value == "gm")
-                window.location.href = "gm.html";
+        function fcAction(form) {
+            if (document.getElementById('role').value == "player") {
+                form.action = "player.html";
+            } 
+            else if (document.getElementById('role').value == "gm") {
+                form.action = "gm.html";
+            }
+            else {
+                return false;
+            }
         }
     </script>
 </body>
