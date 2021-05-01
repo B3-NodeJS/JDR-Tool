@@ -1,12 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    
+    <div class="container">
+        <div class="home-container">
+            <h1>JRD : L'outil indispensable à tous les Jeux Rôle De!</h1>
+            <form aciton="" onsubmit="action();">
+                <label for="username">Entrez votre nom de joueur (il ne s'agit pas du nom de votre personnage) :</label>
+                <input type="text" name="username" id="username" placeholder="Nom de joueur" required
+                    class="input-field" />
+                <label for="role">Choisissez votre rôle :</label>
+                <select name="role" id="role">
+                    <option value="player">Joueur</option>
+                    <option value="gm">Maître du jeu</option>
+                </select>
+                <button type="submit" class="btn">Join Chat</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        function action() {
+            if (document.getElementById('role').value == "player")
+                window.location.href = "player.html";
+            else if (document.getElementById('role').value == "gm")
+                window.location.href = "gm.html";
+        }
+    </script>
 </body>
+
 </html>
