@@ -6,24 +6,25 @@ fastify.register(require('fastify-static'), {
     prefix: '/public/'
 });
 
-fastify.get('/', function (req, reply) {
-    //console.log(req.query.role);
+fastify.get('/', (req, reply) => {
+    //console.log(req.query.username);
     if (req.query.role == 'player'){
-        return reply.redirect('/player');
+        return reply.redirect('/player/' + req.query.username);
     }
 
     if (req.query.role == 'gm'){
-        return reply.redirect('/gm')
+        return reply.redirect('/game-master/' + req.query.username);
     }
 
     return reply.sendFile('index.html');
 });
 
-fastify.get('/player', function (req, reply) {
+fastify.get('/player/:username', (req, reply) => {
+    //reply.send('Bienvenu à toi ' + req.params.username);
     return reply.sendFile('player.html');
 });
 
-fastify.get('/gm', function (req, reply) {
+fastify.get('/game-master/:username', (req, reply) => {
     return reply.sendFile('gm.html');
 });
 
