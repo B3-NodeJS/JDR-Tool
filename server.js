@@ -2,6 +2,7 @@ const fastify = require('fastify')({ logger: true });
 
 fastify.register(require('./socket'));
 fastify.register(require('./route'));
+fastify.register(require('./bot'));
 //Première Méthode
 /*fastify.ready(err => {
     if (err){

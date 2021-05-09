@@ -1,4 +1,5 @@
-const fastifyPlugin = require('fastify-plugin')
+const fastifyPlugin = require('fastify-plugin');
+
 async function socket(fastify, options) {
 
     fastify.register(require('fastify-socket.io'), {
