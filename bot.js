@@ -1,31 +1,42 @@
 'use strict';
+const fs = require('fs');
+const Discord = require('discord.js');
+const { prefix, token } = require('./config.json');
 const fastifyPlugin = require('fastify-plugin');
 
 async function botTools() {
 
-    const Discord = require('discord.js');
     const client = new Discord.Client();
+    client.commands = new Discord.Collection();
 
-    client.on('ready', function () {
-        console.log(`Connecter ${client.user.tag}!`);
+    // Retrieve all commands
+    const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+    for (const file of commandFiles) {
+        const command = require(`./commands/${file}`);
+        client.commands.set(command.name, command);
+    }
+
+    client.once('ready', function () {
+        console.log(`Ready: ${client.user.tag}!`);
     });
 
     client.on('message', msg => {
+        if (!msg.content.startsWith(prefix) || msg.author.bot) return;
 
-        let dice = Math.floor(Math.random() * 6) + 1;
+        const args = msg.content.slice(prefix.length).trim().split(/ +/);
+        const command = args.shift().toLowerCase();
 
-        if (msg.content === 'salut'){
+        if (!client.commands.has(command)) return;
 
-            msg.reply('salut!');
-        }
-
-        if (msg.content === '!dice'){
-
-            msg.reply('Je lance dé.\n Vous avez eu un dé ' + dice + ' !');
+        try {
+            client.commands.get(command).execute(msg, args, client);
+        } catch (error) {
+            console.error(error);
+            msg.reply('there was an error trying to execute that command!');
         }
     });
 
-    client.login('ODQwNTk0MzUzMjM1Mjk2MjU3.YJaefw.MNLmE8DWfWkUEx2NpH1dCJoC1n0');
+    client.login(token);
 }
 
 module.exports = fastifyPlugin(botTools);

@@ -8,12 +8,13 @@ fastify.register(require('fastify-static'), {
     prefix: '/public/'
 });
 
+fastify.register(require('./socket'));
+fastify.register(require('./bot'));
+
 // Routes
 require("./api/routes/index.routes.js")(fastify);
 require("./api/routes/character.routes.js")(fastify);
 require("./api/routes/item.routes.js")(fastify);
-fastify.register(require('./socket'));
-fastify.register(require('./bot'));
 
 // Run and listen
 const PORT = 3000 || process.env.PORT;
