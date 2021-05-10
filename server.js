@@ -1,4 +1,6 @@
 const fastify = require('fastify')({ logger: true });
+const path = require('path');
+const db = require('./api/db');
 
 // Initialize root folder
 fastify.register(require('fastify-static'), {

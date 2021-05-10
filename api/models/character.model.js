@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const Item = require("./item.model.js");
+const Item = require("./item.model.js").schema;
 
-const itemSchema = new Item();
+// const itemSchema = new Item();
 
 const characterSchema = mongoose.Schema({
     firstName: String,
@@ -11,8 +11,8 @@ const characterSchema = mongoose.Schema({
     age: Number,
     class: String,
     equipment: {
-        weapons: [itemSchema],
-        armor: [itemSchema]
+        weapons: [Item],
+        armor: [Item]
     },
     stats: {
         strength: Number,

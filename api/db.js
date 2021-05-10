@@ -10,4 +10,4 @@ mongoose.connect('mongodb+srv://user_test:password_test@b3-nodejs.sbjxa.mongodb.
     console.log('Connected!');
 });
 
-module.exports = database;
+module.exports = mongoose;
