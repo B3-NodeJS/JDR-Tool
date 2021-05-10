@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 
 const Item = require("./item.model.js").schema;
 
-// const itemSchema = new Item();
-
 const characterSchema = mongoose.Schema({
     firstName: String,
     lastName: String,
@@ -30,7 +28,7 @@ const characterSchema = mongoose.Schema({
         {
             itemId: { 
                 type: mongoose.Schema.Types.ObjectId, 
-                ref: 'Author' 
+                ref: 'Item' 
             },
             quantity: Number
         }
