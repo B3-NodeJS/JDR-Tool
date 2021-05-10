@@ -20,9 +20,11 @@ module.exports = (fastify) => {
             .save()
             .then(result => {
                 console.log(result);
+                res.send(200);
             })
             .catch(err => {
                 console.log(err);
+                res.send(500);
             });
     });
 
@@ -33,9 +35,11 @@ module.exports = (fastify) => {
             .exec()
             .then(result => {
                 console.log(result);
+                res.send(200);
             })
             .catch(err => {
                 console.log(err);
+                res.send(500);
             });
     });
 
@@ -48,27 +52,40 @@ module.exports = (fastify) => {
             .exec()
             .then(result => {
                 console.log(result);
+                res.send(200);
             })
             .catch(err => {
                 console.log(err);
+                res.send(500);
             });
     });
 
     // Update
+    /*
+        The body of the update request should look like this :
+        [
+            {
+                "propName": "",
+                "value": ""
+            }
+        ]
+    */
     fastify.patch("/api/character/:characterId", (req, res) => {
         const id = req.params.characterId;
         const updateOps = {};
         for (const ops of req.body) {
-          updateOps[ops.propName] = ops.value;
+            updateOps[ops.propName] = ops.value;
         }
         Character
             .update({ _id: id }, { $set: updateOps })
             .exec()
             .then(result => {
-            console.log(result);
+                console.log(result);
+                res.send(200);
             })
             .catch(err => {
-            console.log(err);
+                console.log(err);
+                res.send(500);
             });
     });
 
@@ -81,9 +98,11 @@ module.exports = (fastify) => {
             .exec()
             .then(result => {
                 console.log(result);
+                res.send(200);
             })
             .catch(err => {
                 console.log(err);
+                res.send(500);
             });
     });
 
@@ -94,9 +113,11 @@ module.exports = (fastify) => {
             .exec()
             .then(result => {
                 console.log(result);
+                res.send(200);
             })
             .catch(err => {
                 console.log(err);
+                res.send(500);
             });
     });
 }
