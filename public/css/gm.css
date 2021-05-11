@@ -1,0 +1,32 @@
+ul#messages {
+    list-style-type: none !important;
+}
+
+.chatting {
+    position: relative;
+    border: 1px solid grey;
+}
+
+#messages {
+    max-height: 90%;
+    overflow: auto;
+}
+
+#form {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: grey;
+    padding: 3px;
+}
+
+#form #input {
+    width: 80%;
+    border-radius: 5px;
+    border: none;
+}
+
+#form .btnChat {
+    border-radius: 5px;
+    border: none;
+}

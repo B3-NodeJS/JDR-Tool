@@ -4,15 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/public/css/gm.css"/>
     <title>Maître du jeu</title>
 </head>
 <body>
-    <h1 style="text-align: center">MJ</h1>
-    <ul id="messages"></ul>
-    <form id="form">
-        <input id="input" autocomplete="off">
-        <button>Chatter</button>
-    </form>
+    <div class="d-flex flex-row vh-100">
+        <div class="d-flex flex-column col-lg-5 h-100">
+            <div class="h-50">
+                
+            <h1>Fiche perso</h1>
+            
+            </div>
+            
+            <div class="chatting h-50">
+                <ul id="messages"></ul>
+
+                <form id="form">
+                    <input id="input" autocomplete="off">
+                    <button class="btnChat">Chatter</button>
+                </form>
+            </div>
+        </div>
+        <div class="d-flex flex-column col-lg-7 h-100">
+            <h1>Fiche autre perso / Mobs</h1>
+
+        </div>
+    </div>
+    
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
         let socket = io();
@@ -21,22 +42,20 @@
         let messages = document.getElementById("messages");
 
         form.addEventListener('submit', function (e) {
-
             e.preventDefault();
             if (input.value){
-
                 socket.emit('Chat message', input.value);
                 input.value = '';
             }
         });
-
         socket.on('Chat message', function (msg) {
-
             let item = document.createElement('li');
             item.textContent = msg;
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);
         });
     </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
 </body>
 </html>
