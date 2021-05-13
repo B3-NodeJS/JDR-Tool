@@ -14,7 +14,7 @@ async function socket(fastify) {
 
         fastify.io.on('connect', (socket) => {
 
-            console.log('Connected : ' + socket.rooms);
+            console.log('Connected : ');
 
             socket.on('Chat message', (msg) => {
                 console.log('message: ' + msg);
@@ -24,6 +24,9 @@ async function socket(fastify) {
                     let str = msg.substr(1).split(' ');
 
                     switch(str[0]) {
+                        case "roll":
+                            fastify.io.emit('Chat message', 'test');
+                            break;
                         case "create":
                             fastify.io.emit('Chat message', 'CEST LA COMMANDE DE CREATION');
                             break;
@@ -33,12 +36,13 @@ async function socket(fastify) {
                         case "delete":
                             fastify.io.emit('Chat message', 'CEST LA COMMANDE DE SUPPRESSION');
                             break;
+                        case "help":
+                            fastify.io.emit('Chat message', "Liste des commande:\n-create vous permet de créer un perso\n-update vous permet de mettre à jour votre perso\n-delete supprime votre perso")
                         default:
                             fastify.io.emit('Chat message', 'Cette commande est inconnue');
                     }
                 }
-            });
-
+                
             socket.on('disconnect', () => {
                 console.log('Disconnect');
             });
