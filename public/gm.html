@@ -11,11 +11,17 @@
 </head>
 <body>
     <div class="d-flex flex-row vh-100">
-        <div class="d-flex flex-column col-lg-5 h-100">
+        <div class="d-flex flex-column col-lg-5 button-gm h-100">
             <div class="h-50">
                 
-            <h1>Fiche perso</h1>
-            
+                <h1 class="text-center">Bouttons</h1>
+
+                <button class="btn btn-primary">Créer un mob aléatoire</button>
+                <br>
+                <button class="btn btn-secondary">Lancer dé aléatoire</button>
+                <br>
+                <button class="btn btn-info">Voir Fiche Perso</button>
+
             </div>
             
             <div class="chatting h-50">
@@ -27,12 +33,138 @@
                 </form>
             </div>
         </div>
-        <div class="d-flex flex-column col-lg-7 h-100">
-            <h1>Fiche autre perso / Mobs</h1>
+        <div class="d-flex flex-column col-lg-7 fiche h-100">
+            <h1 class="text-center">Fiche autre perso / Mobs</h1>
 
+            <table class="table table-bordered">
+                <thead class="bg-info">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Class</th>
+                        <th>Voir fiche</th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a data-bs-toggle="modal" href="#record">Voir fiche</a></td>
+                        <td><a data-bs-toggle="modal" href="#modify">Modifer</a></td>
+                        <td><a href="#">Supprimer</a></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+
+    <div class="modal fade" id="record" tabindex="-1" aria-labelledby="recordLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="recordLabel">Fiche Perso</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Nom:</p>
+              <p>Age:</p>
+              <p>Biographie</p>
+              <p>Equipement:</p>
+              <ul>
+                  <li>Arme:
+                      <ul>
+
+                      </ul>
+                  </li>
+                  <li>Armure:
+                      <ul>
+
+                      </ul>
+                  </li>
+              </ul>
+              <p>Stats:</p>
+              <ul>
+                  <li>Force:</li>
+                  <li>Agilité:</li>
+                  <li>Furtivité:</li>
+                  <li>Intelligence:</li>
+                  <li>Résistance physique:</li>
+                  <li>Résistance magique:</li>
+                  <li>HP:</li>
+                  <li>MP</li>
+                  <li>XP:</li>
+                  <li>Niveau:</li>
+              </ul>
+              <p>Item:</p>
+              <p>Argent:</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+          </div>
+        </div>
+      </div>
     
+      <div class="modal fade" id="modify" tabindex="-1" aria-labelledby="modifyLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modifyLabel">Fiche Perso</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                  <label for="lastName">Nom:</label>
+                  <input type="text" id="lastName" name="lastName">
+
+                  <label for="firstName">Prénom:</label>
+                  <input type="text" id="firstName" name="firstName">
+
+                  <textarea name="biography" rows="5" cols="30">Biographie</textarea>
+
+                  <label for="age">Age:</label>
+                  <input type="number" id="age" name="age">
+
+                  <label for="class">Classe:</label>
+                  <select id="class" name="class">
+                      <option selected>Choisir</option>
+                      <option value="1">Guerrier</option>
+                      <option value="2">Mage</option>
+                      <option value="3">Voleur</option>
+                  </select>
+
+                  <label for="coins">Argent:</label>
+                  <input type="number" id="coins" name="coins">
+
+                  <input type="submit">Modification
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteLabel">Fiche Perso</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Suppression</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>

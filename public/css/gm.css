@@ -30,3 +30,11 @@ ul#messages {
     border-radius: 5px;
     border: none;
 }
+
+.button-gm {
+    border: 1px solid grey;
+}
+
+.fiche {
+    border: 1px solid grey;
+}
