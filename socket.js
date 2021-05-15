@@ -9,11 +9,10 @@ async function socket(fastify) {
     fastify.ready(err => {
 
         if (err) {
-            console.log(err)
+            console.log(err);
         }
 
         fastify.io.on('connect', (socket) => {
-
             console.log('Connected : ');
 
             socket.on('Chat message', (msg) => {
@@ -28,7 +27,7 @@ async function socket(fastify) {
                             fastify.io.emit('Chat message', 'test');
                             break;
                         case "create":
-                            fastify.io.emit('Chat message', 'CEST LA COMMANDE DE CREATION');
+                            fastify.io.emit('Create');
                             break;
                         case "update":
                             fastify.io.emit('Chat message', 'CEST LA COMMANDE DE MODIFICATION');
@@ -43,11 +42,12 @@ async function socket(fastify) {
                     }
                 }
                 
-            socket.on('disconnect', () => {
-                console.log('Disconnect');
+                socket.on('disconnect', () => {
+                    console.log('Disconnect');
+                });
             });
         });
     });
-})}
+};
 
 module.exports = fastifyPlugin(socket);
