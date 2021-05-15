@@ -48,6 +48,6 @@ async function socket(fastify) {
             });
         });
     });
-}
+})}
 
 module.exports = fastifyPlugin(socket);

@@ -4,8 +4,8 @@ const db = require('./api/db');
 
 // Initialize root folder
 fastify.register(require('fastify-static'), {
-    root: path.join(__dirname, 'public'),
-    prefix: '/public/'
+    root: path.join(__dirname, 'src/public'),
+    prefix: '/src/public/'
 });
 
 fastify.register(require('./socket'));
