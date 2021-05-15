@@ -16,12 +16,12 @@ formChat.addEventListener('submit', (e) => {
 
 formModal.addEventListener('submit', (e) => {
     e.preventDefault();
-
-    const fn = document.getElementById("firstName") != null ? document.getElementById("firstName") : null;
-    const ln = document.getElementById("lastName") != null ? document.getElementById("lastName") : null;
+    
+    const fn = document.getElementById("firstName") != null ? document.getElementById("firstName") : '\u200B';
+    const ln = document.getElementById("lastName") != null ? document.getElementById("lastName") : '\u200B';
     const age = document.getElementById("age") != null ? document.getElementById("age") : 0;
-    const cl = document.getElementById("classe") != null ? document.getElementById("classe") : null;
-    const bio = document.getElementById("biography") != null ? document.getElementById("biography") : null;
+    const cl = document.getElementById("classe") != null ? document.getElementById("classe") : '\u200B';
+    const bio = document.getElementById("biography") != null ? document.getElementById("biography") : '\u200B';
     const ste = document.getElementById("strength") != null ? document.getElementById("strength") : 0;
     const ag = document.getElementById("agility") != null ? document.getElementById("agility") : 0;
     const st = document.getElementById("stealth") != null ? document.getElementById("stealth") : 0;
@@ -60,11 +60,18 @@ formModal.addEventListener('submit', (e) => {
     
     if (document.getElementById("inputMethod").value == "create") {
         // console.log('avant le fetch create');
+
+        const btn = document.getElementById('btnClose');
+
         fetch('/api/character', {
             method: 'POST',
             headers: {  'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
+        }).then(res => res.json()).then(json => {
+            // console.log(json);
+            btn.click();
         });
+
     } else {
         // console.log('avant le fetch update');
         console.log('ce n\'est pas create');
@@ -82,6 +89,5 @@ socket.on('Chat message', (msg) => {
 socket.on('Create', () => {
     const modal = new bootstrap.Modal(document.getElementById('modalEdit'));
     modal.show();
-
     document.getElementById("inputMethod").value = 'create';
 });
