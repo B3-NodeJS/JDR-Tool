@@ -1,16 +1,16 @@
-const Item = require("../models/item.model.js");
+const UserCharacter = require("../models/userCharacter.model.js");
 
 module.exports = (fastify) => {
 
     // Create
-    fastify.post("/api/item", (req, res) => {
-        const item = new Item({
-            name: req.body.name,
-            description: req.body.description,
-            type: req.body.type
+    fastify.post("/api/user-character", (req, res) => {
+        const userCharacter = new UserCharacter({
+            character: req.body.character,
+            username: req.body.username,
+            discordId: req.body.discordId
         });
 
-        item
+        userCharacter
             .save()
             .then(result => {
                 console.log(result);
@@ -23,8 +23,8 @@ module.exports = (fastify) => {
     });
 
     // FindAll
-    fastify.get("/api/items", (req, res) => {
-        Item
+    fastify.get("/api/user-characters", (req, res) => {
+        UserCharacter
             .find()
             .exec()
             .then(result => {
@@ -38,10 +38,10 @@ module.exports = (fastify) => {
     });
 
     // Find
-    fastify.get("/api/item/:itemId", (req, res) => {
-        const id = req.params.itemId;
+    fastify.get("/api/user-character/:userCharacterId", (req, res) => {
+        const id = req.params.userCharacterId;
 
-        Item
+        UserCharacter
             .findById(id)
             .exec()
             .then(result => {
@@ -64,13 +64,13 @@ module.exports = (fastify) => {
             }
         ]
     */
-    fastify.patch("/api/item/:itemId", (req, res) => {
-        const id = req.params.itemId;
+    fastify.patch("/api/user-character/:userCharacterId", (req, res) => {
+        const id = req.params.userCharacterId;
         const updateOps = {};
         for (const ops of req.body) {
             updateOps[ops.propName] = ops.value;
         }
-        Item
+        UserCharacter
             .update({ _id: id }, { $set: updateOps })
             .exec()
             .then(result => {
@@ -84,10 +84,10 @@ module.exports = (fastify) => {
     });
 
     // Delete
-    fastify.delete("/api/item/:itemId", (req, res) => {
-        const id = req.params.itemId;
+    fastify.delete("/api/user-character/:userCharacterId", (req, res) => {
+        const id = req.params.userCharacterId;
 
-        Item
+        UserCharacter
             .remove({ _id: id })
             .exec()
             .then(result => {
@@ -101,8 +101,8 @@ module.exports = (fastify) => {
     });
 
     // DeleteAll
-    fastify.delete("/api/items", (req, res) => {
-        Item
+    fastify.delete("/api/user-characters", (req, res) => {
+        UserCharacter
             .remove({})
             .exec()
             .then(result => {

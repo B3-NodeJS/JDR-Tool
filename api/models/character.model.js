@@ -9,8 +9,18 @@ const characterSchema = mongoose.Schema({
     age: Number,
     class: String,
     equipment: {
-        weapons: [Item],
-        armor: [Item]
+        weapons: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Item'
+            }
+        ],
+        armor: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Item'
+            }
+        ]
     },
     stats: {
         strength: Number,
