@@ -20,7 +20,7 @@ module.exports = (fastify) => {
             .save()
             .then(result => {
                 console.log(result);
-                res.send(200);
+                res.send(result);
             })
             .catch(err => {
                 console.log(err);
