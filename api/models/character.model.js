@@ -36,7 +36,7 @@ const characterSchema = mongoose.Schema({
     },
     items: [
         {
-            itemId: {
+            _id: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Item'
             },

@@ -23,20 +23,20 @@ School Project : A Role Play Tool with character sheets, chat and more.
     - [x] views routes (home view, players view, game master view)
         - [ ] web interaction on player view
             - [ ] character sheet (editable)
-            - [ ] chat
-            - [ ] others character sheet
+            - [x] chat
+            - [x] others character sheet
             - [ ] visible monsters
         - [ ] web interaction on game master view
             - [ ] gm button
-            - [ ] chat
+            - [x] chat
             - [ ] all characters sheets (editable)
             - [ ] all monsters sheets (editable)
     - [x] CRUD routes (character, item)
 - [x] discord initialization
     - [x] help command
     - [x] roll dice command
-    - [ ] list characters sheets command
-    - [ ] create character sheet command
+    - [x] list characters sheets command
+    - [x] create character sheet command
     - [ ] update character sheet command
     - [ ] delete character sheet command
     - [ ] create one or more sheets with limited stats command

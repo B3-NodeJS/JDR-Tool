@@ -11,26 +11,173 @@
     <title>Joueur</title>
 </head>
 <body>
-    <div class="d-flex flex-row vh-100">
-        <div class="d-flex flex-column col-lg-5 h-100">
+    <div class="d-flex flex-row vh-100" id="divPl">
+        <div class="d-flex flex-column col-lg-5 col-md-5 col-sm-6 col-xs-12 h-100">
             <div class="h-50">
+                <input type="hidden" id="idperso">
+                <div class="container">
+                  <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Prénom - Nom</th>
+                            <th>Âge</th>
+                            <th>Classe</th>
+                            <th>Biographie</th>
+                            <th>Statistiques</th>
+                            <th>Argents</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="fullNameP"> </td>
+                            <td id="oldP"> </td>
+                            <td id="classP"> </td>
+                            <td id="bioP"> </td>
+                            <td> 
+                                <ul class="flex-inner">
+                                    <li id="strP">Force:</li>
+                                    <li id="agiP">Agilité:</li>
+                                    <li id="stealthP">Discrétion:</li>
+                                    <li id="intP">Intelligence:</li>
+                                    <li id="phyResP">Armure:</li>
+                                    <li id="rmP">Rm:</li>
+                                    <li id="hpP">HP:</li>
+                                    <li id="mpP">MP:</li>
+                                    <li id="xpP">XP:</li>
+                                    <li id="lvlP">Lvl:</li>
+                                </ul>    
+                            </td>
+                            <td id="coinsP"> </td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="container">
+                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEdit"> Modifier </button>
+                  <button type="button" class="btn btn-danger" id="deletePerso" onclick="deleteCharacter()">Supprimer</button>
+                </div>
                 
-            <h1>Fiche perso</h1>
-            
+                <div class="modal" tabindex="-1" id="modalEdit" aria-labelledby="modalEditLabel" aria-hidden="true">
+                    <form id="formModalPlayer">
+                        <input type="hidden" id="inputMethod"/>
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Fiche personnage</h5>
+                                <button type="button" class="btn-close" id="btnClose" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <ul class="flex-outer">
+                                    <li>
+                                      <label for="firstName">Le prénom</label>
+                                      <input type="text" id="firstName" placeholder="Entrez le prénom" class="form-control">
+                                    </li>
+                                    <li>
+                                      <label for="lastName">Le nom</label>
+                                      <input type="text" id="lastName" placeholder="Entrez le nom" class="form-control">
+                                    </li>
+                                    <li>
+                                      <label for="age">L'âge</label>
+                                      <input type="number" id="age" min="0" placeholder="Entrez l'âge" class="form-control">
+                                    </li>
+                                    <li>
+                                      <label for="last-name">La classe</label>
+                                      <input type="text" id="classe" placeholder="Entrez la classe" class="form-control">
+                                    </li>
+                                    <li>
+                                        <label for="biography">La biographie</label>
+                                        <textarea rows="6" id="biography" placeholder="Entrez la biographie ici" class="form-control"></textarea>
+                                    </li>
+                                    <li>
+                                        <label>Les statistiques</label>
+                                        <ul class="flex-outer Stats">
+                                            <li>
+                                              <label for="strength">La force</label>
+                                              <input type="number" id="strength" min="0" placeholder="Entrez la force" class="form-control">
+                                            </li>
+                                            <li>
+                                              <label for="agility">L'agilité</label>
+                                              <input type="number" id="agility" min="0" placeholder="Entrez l'agilité" class="form-control">
+                                            </li>
+                                            <li>
+                                              <label for="stealth">La furtivité</label>
+                                              <input type="number" id="stealth" min="0" placeholder="Entrez la furtivité" class="form-control">
+                                            </li>
+                                            <li>
+                                              <label for="intelligence">L'intelligence</label>
+                                              <input type="number" id="intelligence" min="0" placeholder="Entrez l'intelligence" class="form-control">
+                                            </li>
+                                            <li>
+                                              <label for="physicalRes">La résistance physique</label>
+                                              <input type="number" id="physicalRes" min="0" placeholder="Entrez la résistance physique" class="form-control">
+                                            </li>
+                                            <li>
+                                              <label for="magicalRes">La résistance magique</label>
+                                              <input type="number" id="magicalRes" min="0" placeholder="Entrez la résistance magique" class="form-control">
+                                            </li>
+                                            <li>
+                                              <label for="hp">Les points de vie</label>
+                                              <input type="number" id="hp" min="0" placeholder="Entrez les points de vie" class="form-control">
+                                            </li>
+                                            <li>
+                                              <label for="mp">Les points de mana</label>
+                                              <input type="number" id="mp" min="0" placeholder="Entrez les points de mana" class="form-control">
+                                            </li>
+                                            <li>
+                                              <label for="xp">L'expérience</label>
+                                              <input type="number" id="xp" min="0" placeholder="Entrez l'expérience actuelle" class="form-control">
+                                            </li>
+                                            <li>
+                                              <label for="lvl">Le niveau</label>
+                                              <input type="number" id="lvl" min="0" placeholder="Entrez le niveau" class="form-control">
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                      <label for="coins">Argents</label>
+                                      <input type="number" id="coins" min="0" placeholder="Entrez la monnaie actuelle" class="form-control">
+                                    </li>
+                                    <li>
+                                    </li>
+                                  </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-success btnSend">Enregistrer</button>
+                            </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
             </div>
             
             <div class="chatting h-50">
                 <ul id="messages"></ul>
 
-                <form id="form">
+                <form id="formChat">
                     <input id="input" autocomplete="off">
                     <button class="btnChat">Chatter</button>
                 </form>
             </div>
         </div>
-        <div class="d-flex flex-column col-lg-7 h-100">
-            <h1>Fiche autre perso / Mobs</h1>
-
+        <div class="d-flex flex-column col-lg-7 col-md-7 col-sm-6 col-xs-12 h-100">
+          <div class="container containerAll">
+            <table class="table table-striped table-hover">
+              <thead>
+                  <tr>
+                      <th>Prénom - Nom</th>
+                      <th>Âge</th>
+                      <th>Classe</th>
+                      <th>Biographie</th>
+                      <th>Statistiques</th>
+                      <th>Argents</th>
+                  </tr>
+              </thead>
+              <tbody id="tbodyAllCharacter">
+              </tbody>
+            </table>
+          </div>
         </div>
     </div>
 
