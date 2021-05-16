@@ -14,21 +14,91 @@
         <div class="d-flex flex-column col-lg-5 h-100">
             <div class="h-50">
                 
-            <h1>Fiche perso</h1>
+            <button id="createItem" class="btn btn-primary item" data-bs-toggle="modal" data-bs-target="#modalItem">Créer un item</button>
+            <button id="readItem" class="btn btn-primary item" onclick="readItems()">Voir les items</button>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalMob">Créer un item</button>
+            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalPNG">Créer un item</button>
+
+            <div class="modal" tabindex="-1" id="modalItem" aria-labelledby="modalItemLabel" aria-hidden="true">
+                <form id="formItemModal">
+                    <input type="hidden" id="inputMethodMJ"/>
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Item</h5>
+                            <button type="button" class="btn-close" id="btnClose" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="flex-outer">
+                                <li>
+                                    <label for="itemName">Nom:</label>
+                                    <input type="text" id="itemName" placeholder="Entrez le nom d'un item" class="form-control">
+                                </li>
+                                <li>
+                                    <label for="description">Description:</label>
+                                    <textarea rows="6" id="description" placeholder="Entrez la description ici" class="form-control"></textarea>
+                                </li>
+                                <li>
+                                    <label for="typeItem">Type:</label>
+                                    <input type="text" id="typeItem" placeholder="Entrez le type d'un item" class="form-control">
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-success btnSend">Enregistrer</button>
+                        </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
             
             </div>
             
             <div class="chatting h-50">
                 <ul id="messages"></ul>
 
-                <form id="form">
+                <form id="formChat">
                     <input id="input" autocomplete="off">
                     <button class="btnChat">Chatter</button>
                 </form>
             </div>
         </div>
         <div class="d-flex flex-column col-lg-7 h-100">
-            <h1>Fiche autre perso / Mobs</h1>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#items" type="button" role="tab" aria-controls="items" aria-selected="true">Items</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#character" type="button" role="tab" aria-controls="character" aria-selected="false">Perso</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#mob" type="button" role="tab" aria-controls="mob" aria-selected="false">Mob</button>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="items" role="tabpanel" aria-labelledby="items-tab">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Description</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="tableItem"></td>
+                                <td id="tableDescription"></td>
+                                <td id="tableType"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="character" role="tabpanel" aria-labelledby="character-tab">...</div>
+                <div class="tab-pane fade" id="mob" role="tabpanel" aria-labelledby="mob-tab">...</div>
+              </div>
+              
 
         </div>
     </div>

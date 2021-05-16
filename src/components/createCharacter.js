@@ -1,8 +1,11 @@
 const createCharacter = (args, err) => {
 
-    let results;
+    if (err) {
+        
+        console.log(err);
+    }
 
-    return results;
+    console.log(args);
 }
 
 module.exports = createCharacter;
