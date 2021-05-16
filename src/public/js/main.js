@@ -91,3 +91,33 @@ socket.on('Create', () => {
     modal.show();
     document.getElementById("inputMethod").value = 'create';
 });
+
+socket.on('Read', () => {
+
+    fetch('/api/characters', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(res => res.json())
+    .then(json => {
+        //console.log(json);
+        for(let x of json){
+            console.log(x.stats.stealth);
+            document.getElementById('fullNameOther').innerHTML += x.firstName + ' ' + x.lastName + '<br/>';
+            document.getElementById('oldOther').innerHTML += x.age + '<br/>';
+            document.getElementById('classOther').innerHTML += x.class + '<br/>';
+            document.getElementById('bioOther').innerHTML += x.biography + '<br/>';
+            document.getElementById('strOther').innerHTML += x.stats.strength + '<br/>';
+            document.getElementById('agiOther').innerHTML += x.stats.agility + '<br/>';
+            document.getElementById('stealthOther').innerHTML += x.stats.stealth + '<br/>';
+            document.getElementById('intOther').innerHTML += x.stats.intelligence + '<br/>';
+            document.getElementById('phyResOther').innerHTML += x.stats.physicalRes + '<br/>';
+            document.getElementById('rmOther').innerHTML += x.stats.magicalRes + '<br/>';
+            document.getElementById('hpOther').innerHTML += x.stats.hp + '<br/>';
+            document.getElementById('mpOther').innerHTML += x.stats.mp + '<br/>';
+            document.getElementById('xpOther').innerHTML += x.stats.xp + '<br/>';
+            document.getElementById('lvlOther').innerHTML += x.stats.lvl + '<br/>';
+        }
+        //document.getElementById('test').innerHTML = json[0].firstName;
+    });
+});

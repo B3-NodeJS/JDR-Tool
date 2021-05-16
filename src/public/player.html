@@ -14,7 +14,7 @@
     <div class="d-flex flex-row vh-100">
         <div class="d-flex flex-column col-lg-5 col-md-5 col-sm-6 col-xs-12 h-100">
             <div class="h-50">
-                
+                <input type="hidden" id="idperso">
                 <table>
                     <thead>
                         <tr>
@@ -29,7 +29,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td> </td>
+                            <td id="test"> </td>
                             <td> </td>
                             <td> </td>
                             <td> </td>
@@ -50,7 +50,7 @@
 
                 <div class="modal" tabindex="-1" id="modalEdit" aria-labelledby="modalEditLabel" aria-hidden="true">
                     <form id="formModal">
-                        <input style="display:none;" id="inputMethod"/>
+                        <input type="hidden" id="inputMethod"/>
                         <div class="modal-dialog">
                             <div class="modal-content">
                             <div class="modal-header">
@@ -153,7 +153,42 @@
             </div>
         </div>
         <div class="d-flex flex-column col-lg-7 col-md-7 col-sm-6 col-xs-12 h-100">
-            <h1>Fiche autre perso / Mobs</h1>
+          <table>
+            <thead>
+                <tr>
+                    <th>Prénom - Nom</th>
+                    <th>Âge</th>
+                    <th>Classe</th>
+                    <th>Biographie</th>
+                    <th>Statistiques</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="fullNameOther"> </td>
+                    <td id="oldOther"> </td>
+                    <td id="classOther"> </td>
+                    <td id="bioOther"> </td>
+                    <td> 
+                        <ul class="flex-inner">
+                            <li id="strOther">Force:</li>
+                            <li id="agiOther">Agilité:</li>
+                            <li id="stealthOther">Discrétion:</li>
+                            <li id="intOther">Intelligence:</li>
+                            <li id="phyResOther">Armure:</li>
+                            <li id="rmOther">Rm:</li>
+                            <li id="hpOther">HP:</li>
+                            <li id="mpOther">MP:</li>
+                            <li id="xpOther">XP:</li>
+                            <li id="lvlOther">Lvl:</li>
+                        </ul>    
+                    </td>
+                    <td> </td>
+                </tr>
+            </tbody>
+        </table>
 
         </div>
     </div>

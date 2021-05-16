@@ -29,6 +29,9 @@ async function socket(fastify) {
                         case "create":
                             fastify.io.emit('Create');
                             break;
+                        case "read":
+                            fastify.io.emit('Read');
+                            break;
                         case "update":
                             fastify.io.emit('Chat message', 'CEST LA COMMANDE DE MODIFICATION');
                             break;
