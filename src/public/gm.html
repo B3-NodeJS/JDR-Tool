@@ -14,22 +14,32 @@
         <div class="d-flex flex-column col-lg-5 h-100">
             <div class="h-50">
                 
-            <h1>Fiche perso</h1>
-            
-            </div>
-            
             <div class="chatting h-50">
                 <ul id="messages"></ul>
 
-                <form id="form">
+                <form id="formChat">
                     <input id="input" autocomplete="off">
                     <button class="btnChat">Chatter</button>
                 </form>
             </div>
         </div>
         <div class="d-flex flex-column col-lg-7 h-100">
-            <h1>Fiche autre perso / Mobs</h1>
-
+            <div class="container containerAll">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Prénom - Nom</th>
+                            <th>Âge</th>
+                            <th>Classe</th>
+                            <th>Biographie</th>
+                            <th>Statistiques</th>
+                            <th>Argents</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyAll">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
