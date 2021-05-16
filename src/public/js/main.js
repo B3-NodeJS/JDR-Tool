@@ -19,10 +19,10 @@ formChat.addEventListener('submit', (e) => {
 if (formModalPlayer) {
     formModalPlayer.addEventListener('submit', (e) => {
         e.preventDefault();
-        
+
         // value id if exists
         const id = document.getElementById("idperso") != null ? document.getElementById("idperso") : 0;
-    
+
         // all input'st value
         const fn = document.getElementById("firstName") != null ? document.getElementById("firstName") : '\u200B';
         const ln = document.getElementById("lastName") != null ? document.getElementById("lastName") : '\u200B';
@@ -40,10 +40,10 @@ if (formModalPlayer) {
         const xp = document.getElementById("xp") != null ? document.getElementById("xp") : 0;
         const lvl = document.getElementById("lvl") != null ? document.getElementById("lvl") : 0;
         const coins = document.getElementById("coins") != null ? document.getElementById("coins") : 0;
-    
+
         // btn close
         const btn = document.getElementById('btnClose');
-    
+
         // object Character
         const obj = {
             firstName: fn.value,
@@ -65,18 +65,18 @@ if (formModalPlayer) {
             },
             coins: Number(coins.value)
         };
-    
+
         // to uncomment to check object's content
         //console.log(obj);
         const value = document.getElementById("inputMethod").value;
         if (value == "create") {
             fetch('/api/character', {
                 method: 'POST',
-                headers: {  'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(obj)
             }).then(res => res.json()).then(json => {
                 btn.click();
-                
+
                 // show character's informations
                 document.getElementById('idperso').value = json._id;
                 document.getElementById('fullNameP').innerHTML += (json.firstName != undefined ? json.firstName : '\u200B') + ' ' + (json.lastName != undefined ? json.lastName : '\u200B');
@@ -143,7 +143,7 @@ if (formModalPlayer) {
 
             fetch('/api/character/' + id.value, {
                 method: 'PATCH',
-                headers: {  'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(updObj)
             }).then(res => res.json()).then(json => {
                 console.log(json);
@@ -159,51 +159,51 @@ if (formModalPlayer) {
 if (formItemModal) {
 
     let test = document.getElementsByClassName('item');
-    
+
     for (let i = 0; i < test.length; i++) {
-        
+
         test[i].addEventListener("click", (e) => {
 
-            if (e.srcElement.id == "createItem"){
+            if (e.srcElement.id == "createItem") {
 
                 document.getElementById("inputMethodMJ").value = "createItem";
             };
         });
     }
-    
+
     formItemModal.addEventListener('submit', (e) => {
 
         e.preventDefault();
 
-    
+
         const itemName = document.getElementById("itemName") != null ? document.getElementById("itemName") : '\u200B';
         const description = document.getElementById("description") != null ? document.getElementById("description") : '\u200B';
         const type = document.getElementById("typeItem") != null ? document.getElementById("typeItem") : '\u200B';
-    
+
         const objItem = {
-            
+
             name: itemName.value,
             description: description.value,
             type: type.value
         };
-        
+
         if (document.getElementById("inputMethodMJ").value == "createItem") {
-            
+
             const btn = document.getElementById('btnClose');
-    
+
             fetch('/api/item', {
-    
+
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(objItem)
             })
-            .then(res => res.json())
-            .then(json => {
-                btn.click();
-            });
-    
+                .then(res => res.json())
+                .then(json => {
+                    btn.click();
+                });
+
         } else {
-    
+
             console.log('Erreur!');
         }
     });
@@ -215,6 +215,27 @@ socket.on('Chat message', (msg) => {
     item.textContent = msg;
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
+});
+
+// Roll the dice
+// Note : We can't require a module on client side, so for the moment I'll duplicate the rollDice module
+// Issues : Work only once then show an error about the startsWith() function in socket.js file
+socket.on('Roll', (arg) => {
+    const regex = new RegExp('^\\d+\d\\d+$', 'i');
+    let results = [];
+
+    if (!regex.test(arg))
+        console.log("Wrong syntax...");
+
+    // Random dice numbers according to arguments passed
+    for (let i = 0; i < arg.split('d')[0]; i++) {
+        results.push(Math.floor(Math.random() * arg.split('d')[1]) + 1);
+    }
+
+    console.log(arg);
+    console.log(results);
+
+    socket.emit('Chat message', results);
 });
 
 // to create a character
@@ -236,24 +257,24 @@ socket.on('Update', () => {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
-    .then(res => res.json())
-    .then(json => {
-        document.getElementById("firstName").value = json.firstName;
-        document.getElementById("lastName").value = json.lastName;
-        document.getElementById("age").value = Number(json.age);
-        document.getElementById("biography").value = json.biography;
-        document.getElementById("strength").value = Number(json.stats.strength);
-        document.getElementById("agility").value = Number(json.stats.agility);
-        document.getElementById("stealth").value = Number(json.stats.stealth);
-        document.getElementById("intelligence").value = Number(json.stats.intelligence);
-        document.getElementById("physicalRes").value = Number(json.stats.physicalRes);
-        document.getElementById("magicalRes").value = Number(json.stats.magicalRes);
-        document.getElementById("hp").value = Number(json.stats.hp);
-        document.getElementById("mp").value = Number(json.stats.mp);
-        document.getElementById("xp").value = Number(json.stats.xp);
-        document.getElementById("lvl").value = Number(json.stats.lvl);
-        document.getElementById("coins").value = Number(json.coins);
-    });
+        .then(res => res.json())
+        .then(json => {
+            document.getElementById("firstName").value = json.firstName;
+            document.getElementById("lastName").value = json.lastName;
+            document.getElementById("age").value = Number(json.age);
+            document.getElementById("biography").value = json.biography;
+            document.getElementById("strength").value = Number(json.stats.strength);
+            document.getElementById("agility").value = Number(json.stats.agility);
+            document.getElementById("stealth").value = Number(json.stats.stealth);
+            document.getElementById("intelligence").value = Number(json.stats.intelligence);
+            document.getElementById("physicalRes").value = Number(json.stats.physicalRes);
+            document.getElementById("magicalRes").value = Number(json.stats.magicalRes);
+            document.getElementById("hp").value = Number(json.stats.hp);
+            document.getElementById("mp").value = Number(json.stats.mp);
+            document.getElementById("xp").value = Number(json.stats.xp);
+            document.getElementById("lvl").value = Number(json.stats.lvl);
+            document.getElementById("coins").value = Number(json.coins);
+        });
 });
 
 // to show all characters
@@ -263,42 +284,42 @@ socket.on('Read', () => {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
-    .then(res => res.json())
-    .then(json => {
-        //console.log(json);
-        for(let [index, x] of json.entries()){
+        .then(res => res.json())
+        .then(json => {
+            //console.log(json);
+            for (let [index, x] of json.entries()) {
 
-            var html = "<tr>\n" +
-                "<td id='fullNameOther'> " + (x.firstName != undefined ? x.firstName : '\u200B') + ' ' + (x.lastName != undefined ? x.lastName : '\u200B') + " </td>\n" +
-                "<td id='oldOther'> " + x.age + " </td>\n" +
-                "<td id='classOther'> " + (x.class != undefined ? x.class : '\u200B') + "</td>\n" +
-                "<td id='bioOther'>" + (x.biography != undefined ? x.biography : '\u200B') + " </td>\n" +
-                "<td>\n" +
+                var html = "<tr>\n" +
+                    "<td id='fullNameOther'> " + (x.firstName != undefined ? x.firstName : '\u200B') + ' ' + (x.lastName != undefined ? x.lastName : '\u200B') + " </td>\n" +
+                    "<td id='oldOther'> " + x.age + " </td>\n" +
+                    "<td id='classOther'> " + (x.class != undefined ? x.class : '\u200B') + "</td>\n" +
+                    "<td id='bioOther'>" + (x.biography != undefined ? x.biography : '\u200B') + " </td>\n" +
+                    "<td>\n" +
                     "<ul class='flex-inner'>\n" +
-                        "<li id='strOther'>Force: " + x.stats.strength + "</li>\n" +
-                        "<li id='agiOther'>Agilité: " + x.stats.agility + "</li>\n" + 
-                        "<li id='stealthOther'>Discrétion: " + x.stats.stealth + "</li>\n" + 
-                        "<li id='intOther'>Intelligence: " + x.stats.intelligence + "</li>\n" + 
-                        "<li id='phyResOther'>Armure: " + x.stats.physicalRes + "</li>\n" + 
-                        "<li id='rmOther'>Rm: " + x.stats.magicalRes + "</li>\n" + 
-                        "<li id='hpOther'>HP: " + x.stats.hp + "</li>\n" + 
-                        "<li id='mpOther'>MP: " + x.stats.mp + "</li>\n" + 
-                        "<li id='xpOther'>XP: " + x.stats.xp + "</li>\n" + 
-                        "<li id='lvlOther'>Lvl: " + x.stats.lvl + "</li>\n" +
+                    "<li id='strOther'>Force: " + x.stats.strength + "</li>\n" +
+                    "<li id='agiOther'>Agilité: " + x.stats.agility + "</li>\n" +
+                    "<li id='stealthOther'>Discrétion: " + x.stats.stealth + "</li>\n" +
+                    "<li id='intOther'>Intelligence: " + x.stats.intelligence + "</li>\n" +
+                    "<li id='phyResOther'>Armure: " + x.stats.physicalRes + "</li>\n" +
+                    "<li id='rmOther'>Rm: " + x.stats.magicalRes + "</li>\n" +
+                    "<li id='hpOther'>HP: " + x.stats.hp + "</li>\n" +
+                    "<li id='mpOther'>MP: " + x.stats.mp + "</li>\n" +
+                    "<li id='xpOther'>XP: " + x.stats.xp + "</li>\n" +
+                    "<li id='lvlOther'>Lvl: " + x.stats.lvl + "</li>\n" +
                     "</ul>\n" +
-                "</td>\n" +
-                "<td id='coinsOther'> " + x.coins + " </td>" +
-            "</tr>";
+                    "</td>\n" +
+                    "<td id='coinsOther'> " + x.coins + " </td>" +
+                    "</tr>";
 
-            // check for reload table
-            if (index < 1) {
-                firstPass = true;
-                document.getElementById('tbodyAllCharacter').innerHTML = html;
-            } else {
-                document.getElementById('tbodyAllCharacter').innerHTML += html;
+                // check for reload table
+                if (index < 1) {
+                    firstPass = true;
+                    document.getElementById('tbodyAllCharacter').innerHTML = html;
+                } else {
+                    document.getElementById('tbodyAllCharacter').innerHTML += html;
+                }
             }
-        }
-    });
+        });
 });
 
 // to delete a character
@@ -306,53 +327,53 @@ socket.on('Delete', () => {
     deleteCharacter();
 });
 
-function readItems(){
+function readItems() {
 
     let firstPass = false;
     fetch('/api/items', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
-    .then(res => res.json())
-    .then(json => {
-        
-        for(let [index, y] of json.entries()){
+        .then(res => res.json())
+        .then(json => {
 
-            let html = "<tr>" +
-                "<td id='tableItem'>" + y.name + "</td>" +
-                "<td id='tableDescription'>" + y.description + "</td>" +
-                "<td id='tableType'>"+ y.type + "</td>" +
-            "</tr>";
+            for (let [index, y] of json.entries()) {
 
-            // check for reload table
-            if (index < 1) {
-                firstPass = true;
-                document.getElementById('tbodyAllItem').innerHTML = html;
-            } else {
-                document.getElementById('tbodyAllItem').innerHTML += html;
+                let html = "<tr>" +
+                    "<td id='tableItem'>" + y.name + "</td>" +
+                    "<td id='tableDescription'>" + y.description + "</td>" +
+                    "<td id='tableType'>" + y.type + "</td>" +
+                    "</tr>";
+
+                // check for reload table
+                if (index < 1) {
+                    firstPass = true;
+                    document.getElementById('tbodyAllItem').innerHTML = html;
+                } else {
+                    document.getElementById('tbodyAllItem').innerHTML += html;
+                }
             }
-        }
-    });
+        });
 }
 
 // function to delete a character
-function deleteCharacter () {
+function deleteCharacter() {
     const id = document.getElementById('idperso');
 
     if (confirm('Etes-vous sûr de vouloir supprimer ce personnage ?')) {
         fetch('/api/character/' + id.value, {
             method: 'DELETE',
-            headers: {  'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' }
         })
     }
 }
 
 // to delete all characters
-function deleteAllCharacters () {
+function deleteAllCharacters() {
     if (confirm('Etes-vous sûr de vouloir supprimer tous les personnages ?')) {
         fetch('/api/characters', {
             method: 'DELETE',
-            headers: {  'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' }
         })
     }
 }

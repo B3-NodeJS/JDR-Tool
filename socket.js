@@ -24,7 +24,7 @@ async function socket(fastify) {
 
                     switch(str[0]) {
                         case "roll":
-                            fastify.io.emit('Chat message', 'roll');
+                            fastify.io.emit('Roll', str[1]);
                             break;
                         case "create":
                             fastify.io.emit('Create');
