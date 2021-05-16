@@ -36,9 +36,9 @@ const characterSchema = mongoose.Schema({
     },
     items: [
         {
-            itemId: { 
-                type: mongoose.Schema.Types.ObjectId, 
-                ref: 'Item' 
+            itemId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Item'
             },
             quantity: Number
         }
