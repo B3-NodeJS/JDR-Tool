@@ -10,18 +10,21 @@
     <title>Maître du jeu</title>
 </head>
 <body>
-    <div class="d-flex flex-row vh-100">
+    <div class="d-flex flex-row vh-100" id="divMJ">
         <div class="d-flex flex-column col-lg-5 h-100">
             <div class="h-50">
                 
-            <button id="createItem" class="btn btn-primary item" data-bs-toggle="modal" data-bs-target="#modalItem">Créer un item</button>
-            <button id="readItem" class="btn btn-primary item" onclick="readItems()">Voir les items</button>
+            <button id="createItem" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalItem">Créer un item</button>
+            <button id="readItem" class="btn btn-primary" onclick="readItems()">Voir les items</button>
             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalMob">Créer un item</button>
             <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalPNG">Créer un item</button>
+            <button type="button" class="btn btn-danger" id="deletePerso" onclick="deleteAllCharacters()">Supprimer les personnages</button>
+
 
             <div class="modal" tabindex="-1" id="modalItem" aria-labelledby="modalItemLabel" aria-hidden="true">
                 <form id="formItemModal">
                     <input type="hidden" id="inputMethodMJ"/>
+                    <input type="hidden" id="inputIdItem"/>
                     <div class="modal-dialog">
                         <div class="modal-content">
                         <div class="modal-header">
@@ -52,7 +55,6 @@
                     </div>
                 </form>
             </div>
-            
             </div>
             
             <div class="chatting h-50">
@@ -85,6 +87,7 @@
                                     <th>Nom</th>
                                     <th>Description</th>
                                     <th>Type</th>
+                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyAllItem">
@@ -103,6 +106,7 @@
                                     <th>Biographie</th>
                                     <th>Statistiques</th>
                                     <th>Argents</th>
+                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyAllCharacter">

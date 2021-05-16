@@ -11,7 +11,7 @@
     <title>Joueur</title>
 </head>
 <body>
-    <div class="d-flex flex-row vh-100">
+    <div class="d-flex flex-row vh-100" id="divPl">
         <div class="d-flex flex-column col-lg-5 col-md-5 col-sm-6 col-xs-12 h-100">
             <div class="h-50">
                 <input type="hidden" id="idperso">
@@ -53,8 +53,8 @@
                   </table>
                 </div>
                 <div class="container">
-                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEdit"> Modifier la fiche </button>
-                  <button type="button" class="btn btn-danger" id="deletePerso" onclick="deleteCharacter()">Supprimer le personnage</button>
+                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEdit"> Modifier </button>
+                  <button type="button" class="btn btn-danger" id="deletePerso" onclick="deleteCharacter()">Supprimer</button>
                 </div>
                 
                 <div class="modal" tabindex="-1" id="modalEdit" aria-labelledby="modalEditLabel" aria-hidden="true">

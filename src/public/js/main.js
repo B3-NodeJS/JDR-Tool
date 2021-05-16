@@ -4,8 +4,9 @@ const formItemModal = document.getElementById("formItemModal");
 const formModalPlayer = document.getElementById("formModalPlayer");
 const input = document.getElementById("input");
 const messages = document.getElementById("messages");
+const createIt = document.getElementById('createItem');
 
-
+// for form chat
 formChat.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -16,6 +17,7 @@ formChat.addEventListener('submit', (e) => {
     }
 });
 
+// for form character
 if (formModalPlayer) {
     formModalPlayer.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -146,68 +148,86 @@ if (formModalPlayer) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(updObj)
             }).then(res => res.json()).then(json => {
-                console.log(json);
                 btn.click();
             });
         } else {
-            console.log(value);
+            //console.log(value);
             console.log('Une erreur est survenue, veuillez reessayer plus tard');
         }
     });
 }
 
-if (formItemModal) {
+// for item
+if (createIt) {
+    createIt.addEventListener('click', (e) => {
+        document.getElementById("inputMethodMJ").value = "createItem";
+    });
+}
 
-    let test = document.getElementsByClassName('item');
-
-    for (let i = 0; i < test.length; i++) {
-
-        test[i].addEventListener("click", (e) => {
-
-            if (e.srcElement.id == "createItem") {
-
-                document.getElementById("inputMethodMJ").value = "createItem";
-            };
-        });
-    }
-
+// for form item
+if (formItemModal) {   
     formItemModal.addEventListener('submit', (e) => {
-
         e.preventDefault();
-
-
+    
         const itemName = document.getElementById("itemName") != null ? document.getElementById("itemName") : '\u200B';
         const description = document.getElementById("description") != null ? document.getElementById("description") : '\u200B';
         const type = document.getElementById("typeItem") != null ? document.getElementById("typeItem") : '\u200B';
 
         const objItem = {
-
             name: itemName.value,
             description: description.value,
             type: type.value
         };
+        
+        const val = document.getElementById("inputMethodMJ").value;
 
-        if (document.getElementById("inputMethodMJ").value == "createItem") {
-
+        if (val == "createItem") {
             const btn = document.getElementById('btnClose');
 
             fetch('/api/item', {
-
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(objItem)
             })
-                .then(res => res.json())
-                .then(json => {
-                    btn.click();
-                });
+            .then(res => res.json())
+            .then(json => {
+                btn.click();
+                //console.log(json);
+            });
+    
+        } else if (val == "updateItem") {
+            const oid = document.getElementById("inputIdItem");
+            const btn = document.getElementById('btnClose');
 
+            const obj = [
+                {
+                    propName: "name",
+                    value: objItem.name
+                },
+                {
+                    propName: "description",
+                    value: objItem.description
+                },
+                {   
+                    propName: "type",
+                    value: objItem.type
+                }
+            ];
+
+            fetch('/api/item/' + oid, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(obj)
+            })
+            .then(res => res.json())
+            .then(json => {
+                btn.click();
+                //console.log(json);
+            });
         } else {
-
-            console.log('Erreur!');
+            console.log('Une erreur est survenue, veuillez reessayer plus tard');
         }
     });
-
 }
 
 socket.on('Chat message', (msg) => {
@@ -247,16 +267,152 @@ socket.on('Create', () => {
 
 // to update a character
 socket.on('Update', () => {
-    const id = document.getElementById("idperso");
-    const modal = new bootstrap.Modal(document.getElementById('modalEdit'));
-    modal.show();
-    document.getElementById("inputMethod").value = 'update';
+    updateCharacter(0);
+});
 
-
-    fetch('api/character/' + id.value, {
+// to show all characters
+socket.on('Read', () => {
+    let firstPass = false;
+    fetch('/api/characters', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
+    .then(res => res.json())
+    .then(json => {
+            //console.log(json);
+        for (let [index, x] of json.entries()) {
+
+            var html = "<tr>\n" +
+                "<td id='fullNameOther'> " + (x.firstName != undefined ? x.firstName : '\u200B') + ' ' + (x.lastName != undefined ? x.lastName : '\u200B') + " </td>\n" +
+                "<td id='oldOther'> " + x.age + " </td>\n" +
+                "<td id='classOther'> " + (x.class != undefined ? x.class : '\u200B') + "</td>\n" +
+                "<td id='bioOther'>" + (x.biography != undefined ? x.biography : '\u200B') + " </td>\n" +
+                "<td>\n" +
+                "<ul class='flex-inner'>\n" +
+                "<li id='strOther'>Force: " + x.stats.strength + "</li>\n" +
+                "<li id='agiOther'>Agilité: " + x.stats.agility + "</li>\n" +
+                "<li id='stealthOther'>Discrétion: " + x.stats.stealth + "</li>\n" +
+                "<li id='intOther'>Intelligence: " + x.stats.intelligence + "</li>\n" +
+                "<li id='phyResOther'>Armure: " + x.stats.physicalRes + "</li>\n" +
+                "<li id='rmOther'>Rm: " + x.stats.magicalRes + "</li>\n" +
+                "<li id='hpOther'>HP: " + x.stats.hp + "</li>\n" +
+                "<li id='mpOther'>MP: " + x.stats.mp + "</li>\n" +
+                "<li id='xpOther'>XP: " + x.stats.xp + "</li>\n" +
+                "<li id='lvlOther'>Lvl: " + x.stats.lvl + "</li>\n" +
+                "</ul>\n" +
+            "</td>\n" +
+            "<td id='coinsOther'> " + x.coins + " </td>\n";
+            if (document.getElementById('divMJ')) {
+                html += "<td>\n<button type='button' class='btn btn-success' onclick='updateCharacter(&apos;"+ x._id +"&apos;)'>Modifier</button>\n" +
+                "<button type='button' class='btn btn-danger' onclick='deleteCharacter(&apos;" + x._id + "&apos;)'>Supprimer</button> </td>\n";
+            }
+            html += "</tr>";
+
+            // check for reload table
+            if (index < 1) {
+                firstPass = true;
+                document.getElementById('tbodyAllCharacter').innerHTML = html;
+            } else {
+                document.getElementById('tbodyAllCharacter').innerHTML += html;
+            }
+        };
+    });
+});
+
+// to delete a character
+socket.on('Delete', () => {
+    deleteCharacter(0);
+});
+
+/* all functions */
+
+// to show all items
+function readItems() {
+    let firstPass = false;
+    fetch('/api/items', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(res => res.json())
+    .then(json => {
+        for(let [index, y] of json.entries()){
+            let html = "<tr>\n" +
+                "<td id='tableItem'>" + y.name + "</td>\n" +
+                "<td id='tableDescription'>" + y.description + "</td>\n" +
+                "<td id='tableType'>"+ y.type + "</td>\n" +
+                "<td><button type='button' class='btn btn-success' onclick='updateItem(&apos;" + y._id + "&apos;)'> Modifier</button> \n" +
+                "<button type='button' class='btn btn-danger' onclick='deleteItem(&apos;" + y._id + "&apos;)'>Supprimer</button></td>\n" +
+            "</tr>";
+
+            // check for reload table
+            if (index < 1) {
+                firstPass = true;
+                document.getElementById('tbodyAllItem').innerHTML = html;
+            } else {
+                document.getElementById('tbodyAllItem').innerHTML += html;
+            }
+        };
+    });
+}
+
+// Not working yet
+/* socket.on('Create-Mob', () => {
+
+    socket.emit('Create-Mob');
+}); */
+
+function updateItem (oid) {
+    document.getElementById("inputMethodMJ").value = "updateItem";
+    document.getElementById("inputIdItem").value = oid;
+
+    const modal = new bootstrap.Modal(document.getElementById('modalItem'));
+    modal.show();
+
+    fetch('/api/item/' + oid, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(res => res.json())
+    .then(json => {
+        console.log(json);
+        document.getElementById("itemName").value = json.name;
+        document.getElementById("description").value = json.description;
+        document.getElementById("typeItem").value = json.type;
+    });
+}
+
+// function to delete an item
+function deleteItem (oid) {
+    if (confirm('Etes-vous sûr de vouloir supprimer cet item ?')) {
+        fetch('/api/item/' + oid, {
+            method: 'DELETE',
+            headers: {  'Content-Type': 'application/json' }
+        });
+    }
+}
+
+// function to delete all item
+function deleteAllItem () {
+    if (confirm('Etes-vous sûr de vouloir supprimer tous les items ?')) {
+        fetch('/api/items', {
+            method: 'DELETE',
+            headers: {  'Content-Type': 'application/json' }
+        });
+    }
+}
+
+// to update a character
+function updateCharacter (oid) {
+    if (oid == 0) {
+        const id = document.getElementById("idperso");
+        const modal = new bootstrap.Modal(document.getElementById('modalEdit'));
+        modal.show();
+        document.getElementById("inputMethod").value = 'update';
+    
+        fetch('/api/character/' + id.value, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
         .then(res => res.json())
         .then(json => {
             document.getElementById("firstName").value = json.firstName;
@@ -275,102 +431,54 @@ socket.on('Update', () => {
             document.getElementById("lvl").value = Number(json.stats.lvl);
             document.getElementById("coins").value = Number(json.coins);
         });
-});
-
-// to show all characters
-socket.on('Read', () => {
-    let firstPass = false;
-    fetch('/api/characters', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-    })
-        .then(res => res.json())
-        .then(json => {
-            //console.log(json);
-            for (let [index, x] of json.entries()) {
-
-                var html = "<tr>\n" +
-                    "<td id='fullNameOther'> " + (x.firstName != undefined ? x.firstName : '\u200B') + ' ' + (x.lastName != undefined ? x.lastName : '\u200B') + " </td>\n" +
-                    "<td id='oldOther'> " + x.age + " </td>\n" +
-                    "<td id='classOther'> " + (x.class != undefined ? x.class : '\u200B') + "</td>\n" +
-                    "<td id='bioOther'>" + (x.biography != undefined ? x.biography : '\u200B') + " </td>\n" +
-                    "<td>\n" +
-                    "<ul class='flex-inner'>\n" +
-                    "<li id='strOther'>Force: " + x.stats.strength + "</li>\n" +
-                    "<li id='agiOther'>Agilité: " + x.stats.agility + "</li>\n" +
-                    "<li id='stealthOther'>Discrétion: " + x.stats.stealth + "</li>\n" +
-                    "<li id='intOther'>Intelligence: " + x.stats.intelligence + "</li>\n" +
-                    "<li id='phyResOther'>Armure: " + x.stats.physicalRes + "</li>\n" +
-                    "<li id='rmOther'>Rm: " + x.stats.magicalRes + "</li>\n" +
-                    "<li id='hpOther'>HP: " + x.stats.hp + "</li>\n" +
-                    "<li id='mpOther'>MP: " + x.stats.mp + "</li>\n" +
-                    "<li id='xpOther'>XP: " + x.stats.xp + "</li>\n" +
-                    "<li id='lvlOther'>Lvl: " + x.stats.lvl + "</li>\n" +
-                    "</ul>\n" +
-                    "</td>\n" +
-                    "<td id='coinsOther'> " + x.coins + " </td>" +
-                    "</tr>";
-
-                // check for reload table
-                if (index < 1) {
-                    firstPass = true;
-                    document.getElementById('tbodyAllCharacter').innerHTML = html;
-                } else {
-                    document.getElementById('tbodyAllCharacter').innerHTML += html;
-                }
-            }
-        });
-});
-
-// to delete a character
-socket.on('Delete', () => {
-    deleteCharacter();
-});
-
-function readItems() {
-
-    let firstPass = false;
-    fetch('/api/items', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-    })
-        .then(res => res.json())
-        .then(json => {
-
-            for (let [index, y] of json.entries()) {
-
-                let html = "<tr>" +
-                    "<td id='tableItem'>" + y.name + "</td>" +
-                    "<td id='tableDescription'>" + y.description + "</td>" +
-                    "<td id='tableType'>" + y.type + "</td>" +
-                    "</tr>";
-
-                // check for reload table
-                if (index < 1) {
-                    firstPass = true;
-                    document.getElementById('tbodyAllItem').innerHTML = html;
-                } else {
-                    document.getElementById('tbodyAllItem').innerHTML += html;
-                }
-            }
-        });
-}
-
-// Not working yet
-/* socket.on('Create-Mob', () => {
-
-    socket.emit('Create-Mob');
-}); */
-
-// function to delete a character
-function deleteCharacter() {
-    const id = document.getElementById('idperso');
-
-    if (confirm('Etes-vous sûr de vouloir supprimer ce personnage ?')) {
-        fetch('/api/character/' + id.value, {
-            method: 'DELETE',
+    } else {
+        const modal = new bootstrap.Modal(document.getElementById('modalEdit'));
+        modal.show();
+        document.getElementById("inputMethod").value = 'update';
+    
+        fetch('/api/character/' + oid, {
+            method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
+        .then(res => res.json())
+        .then(json => {
+            document.getElementById("firstName").value = json.firstName;
+            document.getElementById("lastName").value = json.lastName;
+            document.getElementById("age").value = Number(json.age);
+            document.getElementById("biography").value = json.biography;
+            document.getElementById("strength").value = Number(json.stats.strength);
+            document.getElementById("agility").value = Number(json.stats.agility);
+            document.getElementById("stealth").value = Number(json.stats.stealth);
+            document.getElementById("intelligence").value = Number(json.stats.intelligence);
+            document.getElementById("physicalRes").value = Number(json.stats.physicalRes);
+            document.getElementById("magicalRes").value = Number(json.stats.magicalRes);
+            document.getElementById("hp").value = Number(json.stats.hp);
+            document.getElementById("mp").value = Number(json.stats.mp);
+            document.getElementById("xp").value = Number(json.stats.xp);
+            document.getElementById("lvl").value = Number(json.stats.lvl);
+            document.getElementById("coins").value = Number(json.coins);
+        });
+    }
+}
+
+// function to delete a character
+function deleteCharacter (oid) {
+    const id = document.getElementById('idperso');
+
+    if (oid == 0) {
+        if (confirm('Etes-vous sûr de vouloir supprimer ce personnage ?')) {
+            fetch('/api/character/' + id.value, {
+                method: 'DELETE',
+                headers: {  'Content-Type': 'application/json' }
+            });
+        }
+    } else {
+        if (confirm('Etes-vous sûr de vouloir supprimer ce personnage ?')) {
+            fetch('/api/character/' + oid, {
+                method: 'DELETE',
+                headers: {  'Content-Type': 'application/json' }
+            });
+        }
     }
 }
 
