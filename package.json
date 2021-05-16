@@ -24,6 +24,7 @@
     "fastify-plugin": "^3.0.0",
     "fastify-socket.io": "^2.0.0",
     "fastify-static": "^4.0.1",
-    "mongoose": "^5.12.5"
+    "mongoose": "^5.12.5",
+    "node-fetch": "^2.6.1"
   }
 }

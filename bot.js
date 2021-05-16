@@ -16,7 +16,7 @@ async function botTools() {
         client.commands.set(command.name, command);
     }
 
-    client.once('ready', function () {
+    client.once('ready', () => {
         console.log(`Ready: ${client.user.tag}!`);
     });
 

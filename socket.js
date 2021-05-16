@@ -23,7 +23,7 @@ async function socket(fastify) {
                 if (msg.startsWith('!')) {
                     let str = msg.substr(1).split(' ');
 
-                    switch(str[0]) {
+                    switch (str[0]) {
                         case "roll":
                             fastify.io.emit('Chat message', 'test');
                             break;
@@ -42,12 +42,13 @@ async function socket(fastify) {
                             fastify.io.emit('Chat message', 'Cette commande est inconnue');
                     }
                 }
-                
-            socket.on('disconnect', () => {
-                console.log('Disconnect');
+
+                socket.on('disconnect', () => {
+                    console.log('Disconnect');
+                });
             });
         });
-    });
-})}
+    })
+}
 
 module.exports = fastifyPlugin(socket);
