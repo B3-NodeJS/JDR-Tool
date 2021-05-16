@@ -15,7 +15,8 @@
         <div class="d-flex flex-column col-lg-5 col-md-5 col-sm-6 col-xs-12 h-100">
             <div class="h-50">
                 <input type="hidden" id="idperso">
-                <table>
+                <div class="container">
+                  <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th>Prénom - Nom</th>
@@ -23,33 +24,41 @@
                             <th>Classe</th>
                             <th>Biographie</th>
                             <th>Statistiques</th>
-                            <th></th>
-                            <th></th>
+                            <th>Argents</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td id="test"> </td>
-                            <td> </td>
-                            <td> </td>
-                            <td> </td>
+                            <td id="fullNameP"> </td>
+                            <td id="oldP"> </td>
+                            <td id="classP"> </td>
+                            <td id="bioP"> </td>
                             <td> 
                                 <ul class="flex-inner">
-                                    <li></li>
+                                    <li id="strP">Force:</li>
+                                    <li id="agiP">Agilité:</li>
+                                    <li id="stealthP">Discrétion:</li>
+                                    <li id="intP">Intelligence:</li>
+                                    <li id="phyResP">Armure:</li>
+                                    <li id="rmP">Rm:</li>
+                                    <li id="hpP">HP:</li>
+                                    <li id="mpP">MP:</li>
+                                    <li id="xpP">XP:</li>
+                                    <li id="lvlP">Lvl:</li>
                                 </ul>    
                             </td>
-                            <td> </td>
+                            <td id="coinsP"> </td>
                         </tr>
                     </tbody>
-                </table>
+                  </table>
+                </div>
+                <div class="container">
+                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEdit"> Modifier la fiche </button>
+                  <button type="button" class="btn btn-danger" id="deletePerso" onclick="deleteCharacter()">Supprimer le personnage</button>
+                </div>
                 
-            
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEdit">
-                    Modifier la fiche
-                </button>
-
                 <div class="modal" tabindex="-1" id="modalEdit" aria-labelledby="modalEditLabel" aria-hidden="true">
-                    <form id="formModal">
+                    <form id="formModalPlayer">
                         <input type="hidden" id="inputMethod"/>
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -60,11 +69,11 @@
                             <div class="modal-body">
                                 <ul class="flex-outer">
                                     <li>
-                                      <label for="first-name">Le prénom</label>
+                                      <label for="firstName">Le prénom</label>
                                       <input type="text" id="firstName" placeholder="Entrez le prénom" class="form-control">
                                     </li>
                                     <li>
-                                      <label for="last-name">Le nom</label>
+                                      <label for="lastName">Le nom</label>
                                       <input type="text" id="lastName" placeholder="Entrez le nom" class="form-control">
                                     </li>
                                     <li>
@@ -125,8 +134,8 @@
                                         </ul>
                                     </li>
                                     <li>
-                                      <label for="coins">La bourse</label>
-                                      <input type="number" id="coins" min="0" placeholder="Entrez la bourse actuelle" class="form-control">
+                                      <label for="coins">Argents</label>
+                                      <input type="number" id="coins" min="0" placeholder="Entrez la monnaie actuelle" class="form-control">
                                     </li>
                                     <li>
                                     </li>
@@ -153,43 +162,22 @@
             </div>
         </div>
         <div class="d-flex flex-column col-lg-7 col-md-7 col-sm-6 col-xs-12 h-100">
-          <table>
-            <thead>
-                <tr>
-                    <th>Prénom - Nom</th>
-                    <th>Âge</th>
-                    <th>Classe</th>
-                    <th>Biographie</th>
-                    <th>Statistiques</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td id="fullNameOther"> </td>
-                    <td id="oldOther"> </td>
-                    <td id="classOther"> </td>
-                    <td id="bioOther"> </td>
-                    <td> 
-                        <ul class="flex-inner">
-                            <li id="strOther">Force:</li>
-                            <li id="agiOther">Agilité:</li>
-                            <li id="stealthOther">Discrétion:</li>
-                            <li id="intOther">Intelligence:</li>
-                            <li id="phyResOther">Armure:</li>
-                            <li id="rmOther">Rm:</li>
-                            <li id="hpOther">HP:</li>
-                            <li id="mpOther">MP:</li>
-                            <li id="xpOther">XP:</li>
-                            <li id="lvlOther">Lvl:</li>
-                        </ul>    
-                    </td>
-                    <td> </td>
-                </tr>
-            </tbody>
-        </table>
-
+          <div class="container containerAll">
+            <table class="table table-striped table-hover">
+              <thead>
+                  <tr>
+                      <th>Prénom - Nom</th>
+                      <th>Âge</th>
+                      <th>Classe</th>
+                      <th>Biographie</th>
+                      <th>Statistiques</th>
+                      <th>Argents</th>
+                  </tr>
+              </thead>
+              <tbody id="tbodyAll">
+              </tbody>
+            </table>
+          </div>
         </div>
     </div>
 
