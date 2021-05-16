@@ -29,6 +29,10 @@ async function socket(fastify) {
                         case "create":
                             fastify.io.emit('Create');
                             break;
+                        // Not working yet
+                        /* case "create-mob":
+                            fastify.io.emit('Create-Mob');
+                            break; */
                         case "read":
                             fastify.io.emit('Read');
                             break;

@@ -356,6 +356,12 @@ function readItems() {
         });
 }
 
+// Not working yet
+/* socket.on('Create-Mob', () => {
+
+    socket.emit('Create-Mob');
+}); */
+
 // function to delete a character
 function deleteCharacter() {
     const id = document.getElementById('idperso');
