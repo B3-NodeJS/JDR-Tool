@@ -293,9 +293,9 @@ socket.on('Read', () => {
             // check for reload table
             if (index < 1) {
                 firstPass = true;
-                document.getElementById('tbodyAll').innerHTML = html;
+                document.getElementById('tbodyAllCharacter').innerHTML = html;
             } else {
-                document.getElementById('tbodyAll').innerHTML += html;
+                document.getElementById('tbodyAllCharacter').innerHTML += html;
             }
         }
     });
@@ -308,6 +308,7 @@ socket.on('Delete', () => {
 
 function readItems(){
 
+    let firstPass = false;
     fetch('/api/items', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
@@ -315,11 +316,21 @@ function readItems(){
     .then(res => res.json())
     .then(json => {
         
-        for(let y of json){
+        for(let [index, y] of json.entries()){
 
-            document.getElementById("tableItem").innerHTML += y.name + '<br/>';
-            document.getElementById("tableDescription").innerHTML += y.description + '<br/>';
-            document.getElementById("tableType").innerHTML += y.type + '<br/>';
+            let html = "<tr>" +
+                "<td id='tableItem'>" + y.name + "</td>" +
+                "<td id='tableDescription'>" + y.description + "</td>" +
+                "<td id='tableType'>"+ y.type + "</td>" +
+            "</tr>";
+
+            // check for reload table
+            if (index < 1) {
+                firstPass = true;
+                document.getElementById('tbodyAllItem').innerHTML = html;
+            } else {
+                document.getElementById('tbodyAllItem').innerHTML += html;
+            }
         }
     });
 }
