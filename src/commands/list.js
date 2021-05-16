@@ -29,7 +29,7 @@ module.exports = {
                 }
 
                 for (item of result.items) {
-                    const response = await fetch(`http://127.0.0.1:3000/api/item/${item.itemId}`);
+                    const response = await fetch(`http://127.0.0.1:3000/api/item/${item._id}`);
                     const result = await response.json();
                     items.push(`${result.name} * ${item.quantity}`);
                 }

@@ -147,7 +147,7 @@ const updateCharacter = (args) => {
         headers: { 'Content-Type': 'application/json' }
     };
 
-    fetch(`http://127.0.0.1:3000/api/character/${'60a11ef5c1c9fc1f4cc03aca'}`, options);
+    fetch(`http://127.0.0.1:3000/api/character/${'60a18cfae1ec282b6c09d5d3'}`, options);
 };
 
 module.exports = updateCharacter;
