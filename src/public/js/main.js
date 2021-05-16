@@ -6,6 +6,17 @@ const input = document.getElementById("input");
 const messages = document.getElementById("messages");
 const createIt = document.getElementById('createItem');
 
+/*
+// for show character if we can search by UserName
+const urlParams = new URLSearchParams(window.location.search);
+const username = urlParams.get('username');
+
+fetch('/api/user-character/' + username, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+}).then(res => res.json());
+*/
+
 // for form chat
 formChat.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -68,6 +79,7 @@ if (formModalPlayer) {
             coins: Number(coins.value)
         };
 
+
         // to uncomment to check object's content
         //console.log(obj);
         const value = document.getElementById("inputMethod").value;
@@ -96,6 +108,21 @@ if (formModalPlayer) {
                 document.getElementById('xpP').innerHTML += json.stats.xp;
                 document.getElementById('lvlP').innerHTML += json.stats.lvl;
                 document.getElementById('coinsP').innerHTML += json.coins;
+
+                // for bind user-character to character
+                const urlParams = new URLSearchParams(window.location.search);
+                const username = urlParams.get('username');
+
+                const objUser = {
+                    character: json._id,
+                    username: username
+                };
+                
+                fetch('/api/user-character', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(objUser)
+                });
             });
         } else if (value == "update") {
 
