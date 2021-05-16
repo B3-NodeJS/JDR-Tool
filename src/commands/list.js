@@ -40,7 +40,7 @@ module.exports = {
                     .addFields(
                         {
                             name: 'Biographie',
-                            value: result.biography
+                            value: '\u200B' + result.biography
                         },
                         {
                             name: 'Profil',
